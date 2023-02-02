@@ -19,8 +19,8 @@ dot_out = ls('.out',DIR)
 in_files = mergeSort(dot_in,0,len(dot_in)-1)
 out_files = mergeSort(dot_out,0,len(dot_out)-1)
 
-def log(message,verbose=True):
-    if (verbose):
+def log(message,v=verbose):
+    if (v):
         print(message)
 
 def read(path):
@@ -43,8 +43,8 @@ def compare(out,alg):
 for i in range(0,len(in_files)):
     n_in = in_files[i]
     n_out = out_files[i]
-    log('\n🚀',verbose)
-    log(f'Teste in({n_in}) out({n_out})\n',verbose)
+    log('\n🚀')
+    log(f'Teste in({n_in}) out({n_out})\n')
 
     in_path = f'{DIR}{os.path.sep}{n_in}.in'
     out_path =  f'{DIR}{os.path.sep}{n_out}.out'
@@ -59,5 +59,5 @@ for i in range(0,len(in_files)):
     alg_out = alg.run()
 
     result = compare(out, alg_out)
-    log(f'Teste {n_in}: {result}')
-    log('🔚',verbose)
+    log(f'Teste {n_in} {result}', True)
+    log('🔚')
