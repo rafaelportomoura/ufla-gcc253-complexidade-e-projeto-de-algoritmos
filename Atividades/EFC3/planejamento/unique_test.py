@@ -35,6 +35,6 @@ for i in range(0, casos_de_testes):
     out[i] = out[i].replace(" ", "").replace("\t", "")
     result = compare(out_file[i], out[i])
     corretos = corretos + 1 if result == "✅" else corretos
-    print(f"\tCaso de teste ({i}) = {result}")
+    print(f"\tCaso de teste ({i+1}) = {result}")
 
 print(f"{corretos} casos de testes corretos de um total de {casos_de_testes} casos\n")
