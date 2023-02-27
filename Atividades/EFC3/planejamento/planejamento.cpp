@@ -1,24 +1,30 @@
 #include <iostream>
 #include <vector>
+#include <algorithm>
+#include <functional>
 
 using namespace std;
 
-
-bool DEBUG = false;
-
-void log( string x, bool should_log = true, bool verbose = DEBUG ) {
-  if ( verbose && should_log ) cout << x;
-}
+#define DECRESCENT  greater<int>()
+#define CRESCENT less<int>()
 
 int funcao( int soma_das_rotas, int horas ) {
   return soma_das_rotas < horas ? horas - soma_das_rotas : soma_das_rotas - horas;
 }
 
-bool retornaMelhor( int old, int actual, int horas ) {
+bool isActualBetter( int old, int actual, int horas, int matutina ) {
+  if ( matutina >= horas ) {
+    return actual < old;
+  }
+
   int f_old = funcao( old, horas );
   int f_actual = funcao( actual, horas );
 
-  return f_old < f_actual ? false : true;
+  if ( f_actual == 0 ) return true;
+
+  if ( f_actual == f_old ) return actual <= horas;
+
+  return f_actual < f_old;
 }
 
 
@@ -31,20 +37,18 @@ int planejamento( int motoristas, int horas, int valor ) {
     cin >> matutinas[i] >> vespertinas[i];
   }
 
+  sort( matutinas.begin(), matutinas.end(), DECRESCENT );
+  sort( vespertinas.begin(), vespertinas.end(), CRESCENT );
 
-  int solucao[motoristas];
-
+  int solucao[motoristas + 1];
+  solucao[0] = 0;
   for ( int m = 0; m < motoristas; m++ ) {
+    int s = m + 1;
     int melhor = INT32_MAX;
     int index_melhor = -1;
     for ( int v = 0; v < ( int )vespertinas.size(); v++ ) {
       int soma_das_rotas = matutinas[m] + vespertinas[v];
-
-      log( "\t" );
-      log( to_string( matutinas[m] + vespertinas[v] ), true );
-      log( to_string( matutinas[m] ), false );
-      log( to_string( vespertinas[v] ), false );
-      if ( retornaMelhor( melhor, soma_das_rotas, horas ) ) {
+      if ( isActualBetter( melhor, soma_das_rotas, horas, matutinas[m] ) ) {
         melhor = soma_das_rotas;
         index_melhor = v;
       }
@@ -52,14 +56,12 @@ int planejamento( int motoristas, int horas, int valor ) {
     if ( index_melhor >= 0 ) {
       vespertinas.erase( vespertinas.begin() + index_melhor );
     }
-    log( "\t" + to_string( vespertinas.size() ) + "\n" );
-    solucao[m] = melhor > horas ? ( melhor - horas ) * valor : 0;
-    if ( m > 0 )
-      solucao[m] += solucao[m - 1];
+    solucao[s] = melhor > horas ? ( melhor - horas ) * valor : 0;
+    solucao[s] += solucao[s - 1];
   }
 
 
-  int resposta = solucao[motoristas - 1];
+  int resposta = solucao[motoristas];
   return resposta;
 }
 
