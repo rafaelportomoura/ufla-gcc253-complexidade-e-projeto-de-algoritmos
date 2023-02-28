@@ -38,7 +38,7 @@ int planejamento( int motoristas, int horas, int valor ) {
   }
 
   sort( matutinas.begin(), matutinas.end(), DECRESCENT );
-  sort( vespertinas.begin(), vespertinas.end(), CRESCENT );
+  sort( vespertinas.begin(), vespertinas.end(), DECRESCENT );
 
   int solucao[motoristas + 1];
   solucao[0] = 0;
@@ -46,13 +46,16 @@ int planejamento( int motoristas, int horas, int valor ) {
     int s = m + 1;
     int melhor = INT32_MAX;
     int index_melhor = -1;
+    // cout << matutinas[m];
     for ( int v = 0; v < ( int )vespertinas.size(); v++ ) {
       int soma_das_rotas = matutinas[m] + vespertinas[v];
+      // cout << "\t" << vespertinas[v];
       if ( isActualBetter( melhor, soma_das_rotas, horas, matutinas[m] ) ) {
         melhor = soma_das_rotas;
         index_melhor = v;
       }
     }
+    // cout << endl;
     if ( index_melhor >= 0 ) {
       vespertinas.erase( vespertinas.begin() + index_melhor );
     }
