@@ -9,22 +9,17 @@ using namespace std;
 #define CRESCENT less<int>()
 
 int funcao( int soma_das_rotas, int horas ) {
-  return soma_das_rotas < horas ? horas - soma_das_rotas : soma_das_rotas - horas;
+  return  soma_das_rotas - horas;
 }
 
-bool isActualBetter( int old, int actual, int horas, int matutina ) {
-  if ( matutina >= horas ) {
-    return actual < old;
-  }
+bool oAtualEhMelhor( int velho, int atual, int horas, int matutina ) {
+  if ( atual < horas and velho < horas ) return atual > velho;
 
-  int f_old = funcao( old, horas );
-  int f_actual = funcao( actual, horas );
+  int f_velho = funcao( velho, horas );
+  int f_atual = funcao( atual, horas );
 
-  if ( f_actual == 0 ) return true;
 
-  if ( f_actual == f_old ) return actual <= horas;
-
-  return f_actual < f_old;
+  return f_atual < f_velho;
 }
 
 
@@ -38,7 +33,7 @@ int planejamento( int motoristas, int horas, int valor ) {
   }
 
   sort( matutinas.begin(), matutinas.end(), DECRESCENT );
-  sort( vespertinas.begin(), vespertinas.end(), DECRESCENT );
+  sort( vespertinas.begin(), vespertinas.end(), CRESCENT );
 
   int solucao[motoristas + 1];
   solucao[0] = 0;
@@ -46,16 +41,16 @@ int planejamento( int motoristas, int horas, int valor ) {
     int s = m + 1;
     int melhor = INT32_MAX;
     int index_melhor = -1;
-    // cout << matutinas[m];
+
     for ( int v = 0; v < ( int )vespertinas.size(); v++ ) {
       int soma_das_rotas = matutinas[m] + vespertinas[v];
-      // cout << "\t" << vespertinas[v];
-      if ( isActualBetter( melhor, soma_das_rotas, horas, matutinas[m] ) ) {
+
+      if ( oAtualEhMelhor( melhor, soma_das_rotas, horas, matutinas[m] ) ) {
         melhor = soma_das_rotas;
         index_melhor = v;
       }
     }
-    // cout << endl;
+
     if ( index_melhor >= 0 ) {
       vespertinas.erase( vespertinas.begin() + index_melhor );
     }
