@@ -23,3 +23,22 @@ for v in graph_incidence:
     z[v] = d
 
 print(z)
+
+k = {1: 0, 2: INF, 3: INF, 4: INF, 5: INF, 6: INF, 7: INF}
+
+graph_adjacence = {
+    1: {2: 3, 3: 7, 4: 9},
+    2: {5: 11, 6: 7},
+    3: {5: 2, 6: 9},
+    4: {5: 1, 6: 9},
+    5: {7: 8},
+    6: {7: 2},
+    7: {},
+}
+
+for u in graph_adjacence:
+    d = INF
+    for v in graph_adjacence[u]:
+        k[v] = min(k[v], graph_adjacence[u][v] + k[u])
+
+print(k)
