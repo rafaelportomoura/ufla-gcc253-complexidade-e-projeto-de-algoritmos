@@ -1,9 +1,3 @@
-/*
-  202011125 - Danilo Aparecido Namitala
-  201820005 - Diego Marques Andrade
-  201820274 - Rafael Porto Vieira de Moura
-*/
-
 #include <iostream>
 #include <cstring>
 
