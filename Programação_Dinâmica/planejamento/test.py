@@ -80,9 +80,15 @@ def read(path):
 def compare(out, alg):
     for i in range(0, len(out)):
         out[i] = out[i].replace(" ", "").replace("\t", "")
-        log(f"{out[i]} == {alg[i]} : { '✅' if out[i] == alg[i] else '❌'}")
         if out[i] != alg[i]:
             return "❌"
+
+    return "✅"
+
+
+def compare_unique(out, alg):
+    if out != alg:
+        return f"❌ (expect {out} to equal {alg})"
 
     return "✅"
 
@@ -90,11 +96,11 @@ def compare(out, alg):
 os.system("g++ planejamento.cpp -Wall -o main.exe")
 
 
+casos_total = 0
+casos_corretos_total = 0
 for i in range(0, len(in_files)):
     n_in = in_files[i]
     n_out = out_files[i]
-    log("\n🚀")
-    log(f"Teste in({n_in}) out({n_out})\n")
 
     in_path = f"{DIR}{os.path.sep}{n_in}.in"
     out_path = f"{DIR}{os.path.sep}{n_out}.out"
@@ -102,9 +108,25 @@ for i in range(0, len(in_files)):
 
     out = os.popen(f"./main.exe < {in_path}").read().split("\n")
 
-    log(f"Alg out:  {out}")
+    casos_de_testes = len(out_file)
+    casos_total += casos_de_testes
+    corretos = 0
+
+    for i in range(0, casos_de_testes):
+        out[i] = out[i].replace(" ", "").replace("\t", "")
+        result = compare_unique(out_file[i], out[i])
+        corretos = corretos + 1 if result == "✅" else corretos
+        log(f"\tCaso de teste ({i+1}) = {result}")
+
+    casos_corretos_total += corretos
 
     result = compare(out_file, out)
+    log(
+        f"Teste {n_in} {result} | {corretos} casos de testes corretos de um total de {casos_de_testes} casos",
+        True,
+    )
 
-    log(f"Teste {n_in} {result}", True)
-    log("🔚")
+log(
+    f"{casos_corretos_total} casos de testes corretos de um total de {casos_total} casos\n",
+    True,
+)
