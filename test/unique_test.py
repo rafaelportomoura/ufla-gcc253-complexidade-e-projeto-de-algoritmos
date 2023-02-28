@@ -1,13 +1,14 @@
 import os
 import sys
 
-os.system("g++ olimpiada.cpp -Wall -o main.exe")
+os.system("g++ planejamento.cpp -Wall -o main.exe")
 
 test = sys.argv[1]
+EXE = sys.argv[2]
+DIR = sys.argv[3]
 
-out = os.popen(f"./main.exe < test/{test}.in").read()
-print(out)
-out = out.split("\n")
+
+os.system(f"./main.exe < test/{test}.in")
 
 
 def read(path):
@@ -27,7 +28,8 @@ def compare(out, alg):
     return "✅"
 
 
-out_file = read(f"test/{test}.out").split("\n")
+out_file = read(f"{DIR}/{test}.out").split("\n")
+out = os.popen(f"{EXE} < {DIR}/{test}.in").read().split("\n")
 
 print(f"\nTeste {test}.in")
 casos_de_testes = len(out_file)

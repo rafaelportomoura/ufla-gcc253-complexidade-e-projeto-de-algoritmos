@@ -43,7 +43,8 @@ def mergeSort(array, begin, end):
 
 
 DIR = sys.argv[1]
-verbose = True if len(sys.argv) > 2 and sys.argv[2] == "true" else False
+EXE = sys.argv[2]
+verbose = True if len(sys.argv) > 3 and sys.argv[3] == "true" else False
 
 
 def ls(ext=".in", path=DIR):
@@ -93,9 +94,6 @@ def compare_unique(out, alg):
     return "✅"
 
 
-os.system("g++ olimpiada.cpp -Wall -o main.exe")
-
-
 casos_total = 0
 casos_corretos_total = 0
 for i in range(0, len(in_files)):
@@ -106,7 +104,7 @@ for i in range(0, len(in_files)):
     out_path = f"{DIR}{os.path.sep}{n_out}.out"
     out_file = read(out_path).split("\n")
 
-    out = os.popen(f"./main.exe < {in_path}").read().split("\n")
+    out = os.popen(f"{EXE} < {in_path}").read().split("\n")
 
     casos_de_testes = len(out_file)
     casos_total += casos_de_testes

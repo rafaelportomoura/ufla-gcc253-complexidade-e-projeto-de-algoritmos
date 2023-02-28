@@ -1,0 +1,11 @@
+{
+  "name": "gcc253-complexidade-e-projeto-de-algoritmos",
+  "version": "1.0.0",
+  "scripts": {
+    "olimpiada": "sh test/test.sh --dir ./Programação_Dinâmica/olimpiada --arq olimpiada.cpp --test_dir ./Programação_Dinâmica/olimpiada/test",
+    "planejamento": "sh test/test.sh --dir ./Programação_Dinâmica/planejamento --arq planejamento.cpp --test_dir ./Programação_Dinâmica/planejamento/test"
+  },
+  "repository": "git@github.com:rafaelportomoura/gcc253-complexidade-e-projeto-de-algoritmos.git",
+  "author": "rafael_.moura <rafael.moura.dev.29@gmail.com>",
+  "license": "MIT"
+}
