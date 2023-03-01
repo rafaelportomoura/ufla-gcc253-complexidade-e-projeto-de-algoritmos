@@ -49,17 +49,18 @@ int jogo( int seq[ ], int inicio, int fim ) {
 
 int main() {
   int n;
-  cin >> n;
+  bool primeiro = true;
 
-  while ( n ) {
+  while ( cin >> n ) {
+    if ( primeiro ) primeiro = false;
+    else cout << endl;
+
     int seq[n];
     for ( int i = 0; i < n; i++ )
       cin >> seq[i];
 
     imprimir( jogo( seq, 0, n - 1 ) );
 
-    cin >> n;
-    if ( n ) cout << endl;
   }
 
   return 0;

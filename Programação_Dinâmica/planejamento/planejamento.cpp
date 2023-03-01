@@ -1,3 +1,9 @@
+/*
+  202011125 - Danilo Aparecido Namitala
+  201820005 - Diego Marques Andrade
+  201820274 - Rafael Porto Vieira de Moura
+*/
+
 #include <iostream>
 #include <vector>
 #include <algorithm>
@@ -8,22 +14,6 @@ using namespace std;
 #define DECRESCENT  greater<int>()
 #define CRESCENT less<int>()
 
-int funcao( int soma_das_rotas, int horas ) {
-  return  soma_das_rotas - horas;
-}
-
-bool oAtualEhMelhor( int velho, int atual, int horas, int matutina ) {
-  if ( atual < horas and velho < horas ) return atual > velho;
-
-  int f_velho = funcao( velho, horas );
-  int f_atual = funcao( atual, horas );
-
-
-  return f_atual < f_velho;
-}
-
-
-
 int planejamento( int motoristas, int horas, int valor ) {
   vector<int> matutinas( motoristas );
   vector<int> vespertinas( motoristas );
@@ -33,28 +23,19 @@ int planejamento( int motoristas, int horas, int valor ) {
   }
 
   sort( matutinas.begin(), matutinas.end(), DECRESCENT );
-  sort( vespertinas.begin(), vespertinas.end(), CRESCENT );
+  sort( vespertinas.begin(), vespertinas.end(), DECRESCENT );
 
   int solucao[motoristas + 1];
   solucao[0] = 0;
   for ( int m = 0; m < motoristas; m++ ) {
+
+    int soma_das_rotas = vespertinas.back() + matutinas[m];
+    vespertinas.pop_back();
+
+    int excedente = soma_das_rotas - horas;
+
     int s = m + 1;
-    int melhor = INT32_MAX;
-    int index_melhor = -1;
-
-    for ( int v = 0; v < ( int )vespertinas.size(); v++ ) {
-      int soma_das_rotas = matutinas[m] + vespertinas[v];
-
-      if ( oAtualEhMelhor( melhor, soma_das_rotas, horas, matutinas[m] ) ) {
-        melhor = soma_das_rotas;
-        index_melhor = v;
-      }
-    }
-
-    if ( index_melhor >= 0 ) {
-      vespertinas.erase( vespertinas.begin() + index_melhor );
-    }
-    solucao[s] = melhor > horas ? ( melhor - horas ) * valor : 0;
+    solucao[s] = excedente > 0 ? excedente * valor : 0;
     solucao[s] += solucao[s - 1];
   }
 
