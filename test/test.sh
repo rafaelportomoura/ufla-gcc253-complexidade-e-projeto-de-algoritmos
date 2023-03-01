@@ -40,8 +40,8 @@ EXE=$DIR/main.exe
 g++ $DIR/$ARQ -Wall -o $EXE
 
 if [ "$TIPO_DE_TESTE" = "unique" ]; then
-  echo "python $DIR_OF_SCRIPTS/unique_test.py $TESTE $EXE $TESTES"
-  python $DIR_OF_SCRIPTS/unique_test.py $TESTE $EXE $TESTES
+  echo "python $DIR_OF_SCRIPTS/unique_test.py $TESTE $EXE $TESTES $VERBOSE"
+  python $DIR_OF_SCRIPTS/unique_test.py $TESTE $EXE $TESTES $VERBOSE
 else
   echo "python $DIR_OF_SCRIPTS/test.py $TESTES $EXE $VERBOSE"
   python $DIR_OF_SCRIPTS/test.py $TESTES $EXE $VERBOSE

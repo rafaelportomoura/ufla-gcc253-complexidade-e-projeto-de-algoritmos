@@ -1,14 +1,16 @@
 import os
 import sys
 
-os.system("g++ planejamento.cpp -Wall -o main.exe")
 
 test = sys.argv[1]
 EXE = sys.argv[2]
 DIR = sys.argv[3]
+VERBOSE = sys.argv[4] == "true" if len(sys.argv) > 4 else False
 
 
-os.system(f"./main.exe < test/{test}.in")
+def verbose(*args):
+    if VERBOSE:
+        print(*args)
 
 
 def read(path):
@@ -30,12 +32,15 @@ def compare(out, alg):
 
 out_file = read(f"{DIR}/{test}.out").split("\n")
 out = os.popen(f"{EXE} < {DIR}/{test}.in").read().split("\n")
+if VERBOSE:
+    for o in out:
+        verbose(o)
 
 print(f"\nTeste {test}.in")
 casos_de_testes = len(out_file)
 corretos = 0
 for i in range(0, casos_de_testes):
-    out[i] = out[i].replace(" ", "").replace("\t", "")
+    # out[i] = out[i].replace(" ", "").replace("\t", "")
     result = compare(out_file[i], out[i])
     corretos = corretos + 1 if result == "✅" else corretos
     print(f"\tCaso de teste ({i+1}) = {result}")
