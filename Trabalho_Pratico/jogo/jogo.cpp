@@ -13,7 +13,7 @@ void imprimir( int ganhador ) {
 int particao( int seq[ ], int inicio, int fim, int& mexidas ) {
   int i = inicio;
   int j = fim;
-  int pivot = seq[inicio];
+  int pivot = seq[( inicio + fim ) / 2];
 
   while ( i < j ) {
     while ( seq[i] < pivot )
