@@ -4,7 +4,8 @@
   "scripts": {
     "pd:olimpiada": "sh test/test.sh --dir ./Programação_Dinâmica/olimpiada --arq olimpiada.cpp --test_dir ./Programação_Dinâmica/olimpiada/test",
     "pd:planejamento": "sh test/test.sh --dir ./Programação_Dinâmica/planejamento --arq planejamento.cpp --test_dir ./Programação_Dinâmica/planejamento/test",
-    "tp:jogo": "sh test/test.sh --dir ./Trabalho_Pratico/jogo --arq jogo.cpp --test_dir ./Trabalho_Pratico/jogo/test"
+    "tp:jogo": "sh test/test.sh --dir ./Trabalho_Pratico/jogo --arq jogo.cpp --test_dir ./Trabalho_Pratico/jogo/test",
+    "tp:urbano": "sh test/test.sh --dir ./Trabalho_Pratico/transporte_urbano --arq urbano.cpp --test_dir ./Trabalho_Pratico/transporte_urbano/test"
   },
   "repository": "git@github.com:rafaelportomoura/gcc253-complexidade-e-projeto-de-algoritmos.git",
   "author": "rafael_.moura <rafael.moura.dev.29@gmail.com>",
